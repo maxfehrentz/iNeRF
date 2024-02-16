@@ -123,6 +123,9 @@ net = make_model(conf["model"]).to(device=device).load_weights(args)
 renderer = NeRFRenderer.from_conf(
     conf["renderer"], eval_batch_size=args.ray_batch_size
 ).to(device=device)
+# bind_parallel -> creates wrapper with net -> renderer_par can later just be called with rays and will use net
+#  wrapper will call normal renderer NeRFRenderer with net, which the renderer will use as model
+#  actual model is only called in self.composite!
 render_par = renderer.bind_parallel(net, args.gpu_id, simple_output=True)
 
 # iNeRF

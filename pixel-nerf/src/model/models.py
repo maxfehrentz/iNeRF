@@ -10,6 +10,29 @@ from util import repeat_interleave
 import os
 import os.path as osp
 import warnings
+from style_ngp.style_ngp_model import StyleNGPModel
+
+class AdaptedStyleNGP(StyleNGPModel):
+    def __init__(self, config, device, test_mode, world_size):
+        super().__init__(config, device, test_mode, world_size)
+
+    def populate_modules(self):
+        super().populate_modules()
+
+    # TODO: figure out this network can emulate the forward behavior PixelNeRFNet, accepting the same inputs
+    #  and giving the same output format
+    def forward(self, xyz, coarse=True, viewdirs=None, far=False):
+        """
+        Predict (r, g, b, sigma) at world space points xyz.
+        Please call encode first!
+        :param xyz (SB, B, 3)
+        SB is batch of objects
+        B is batch of points (in rays)
+        NS is number of input views
+        :return (SB, B, 4) r g b sigma
+        """
+        # TODO: implement
+        return None
 
 
 class PixelNeRFNet(torch.nn.Module):

@@ -1,7 +1,7 @@
 torch
 torchvision
 pretrainedmodels
-pyhocon
+pyhocon==0.3.57
 imageio
 opencv-python
 imageio-ffmpeg
